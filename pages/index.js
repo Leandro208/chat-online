@@ -1,4 +1,5 @@
 import { Box, Button, Text, TextField, Image } from '@skynexui/components';
+import React from 'react';
 import appConfig from '../config.json';
 
 function GlobalStyle() {
@@ -58,15 +59,15 @@ function Titulo(props) {
 //export default HomePage 
 
 export default function PaginaInicial() {
-    const username = 'Leandro208';
-
+    // const username = 'Leandro208';
+    const [username, setUsername] = React.useState('Leandro208');
     return (
         <>
             <GlobalStyle />
             <Box
                 styleSheet={{
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    backgroundColor: appConfig.theme.colors.primary[999],
+                    backgroundColor: appConfig.theme.colors.primary[100],
                     backgroundImage: 'url(https://images6.alphacoders.com/550/thumb-1920-550127.jpg)',
                     backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundBlendMode: 'multiply',
                 }}
@@ -89,6 +90,9 @@ export default function PaginaInicial() {
                     {/* Formulário */}
                     <Box
                         as="form"
+                        onSubmit={function (){
+                            console.console.log('');
+                        }}
                         styleSheet={{
                             display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
                             width: { xs: '100%', sm: '50%' }, textAlign: 'center', marginBottom: '32px',
@@ -98,8 +102,26 @@ export default function PaginaInicial() {
                         <Text variant="body3" styleSheet={{ marginBottom: '32px', color: appConfig.theme.colors.neutrals[300] }}>
                             {appConfig.name}
                         </Text>
-
+                        {/*<input 
+                            type = "text"
+                            value={username}
+                            onChange={function (event){
+                                //pegando o valor
+                                const valor = event.target.value;
+                                //trocando valor da variavel 
+                                setUsername(valor);
+                                
+                            }}
+                        />*/}
                         <TextField
+                             value={username}
+                             onChange={function (event){
+                                //pegando o valor
+                                const valor = event.target.value;
+                                //trocando valor da variavel 
+                                setUsername(valor);
+                                
+                            }}
                             fullWidth
                             textFieldColors={{
                                 neutral: {
@@ -109,7 +131,7 @@ export default function PaginaInicial() {
                                     backgroundColor: appConfig.theme.colors.neutrals[800],
                                 },
                             }}
-                        />
+                        /> 
                         <Button
                             type='submit'
                             label='Entrar'
