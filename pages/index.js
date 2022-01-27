@@ -33,7 +33,7 @@ function Titulo(props) {
 
 export default function PaginaInicial() {
     // const username = 'Leandro208';
-    const [username, setUsername] = React.useState('Leandro208');
+    const [username, setUsername] = React.useState('');
     const roteamento = useRouter();
 
     return (
@@ -100,6 +100,7 @@ export default function PaginaInicial() {
                                 setUsername(valor);
                                 
                             }}
+                            placeholder="Insira seu usuario do Github aqui..."
                             fullWidth
                             textFieldColors={{
                                 neutral: {
