@@ -1,23 +1,59 @@
 import { Box, Text, TextField, Image, Button } from '@skynexui/components';
 import React from 'react';
 import appConfig from '../config.json';
+import { createClient } from '@supabase/supabase-js'
+
+//integrando supabse
+// como fazer ajax: https://medium.com/@omariosouto/entendendo-como-fazer-ajax-com-a-fetchapi-977ff20da3c6
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTY0MzMzNTEwMywiZXhwIjoxOTU4OTExMTAzfQ.5uTWLzk3dqZGlWz8gxHGSSppKVWOleXHmGN6WVrxw5w';
+const SUPABASE_URL = 'https://hsgjfxyikwjwhznktdxc.supabase.co';
+const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+
+
 
 export default function ChatPage() {
     const [mensagem, setMensagem] = React.useState('');
     const [listaDeMensagens, setListaDeMensagens] = React.useState([]);
     // usuaro digita no campo textarea
     // aperta enter para enviar
+
+    React.useEffect(() => {
+        supabaseClient
+            .from('mensagens')
+            .select('*')
+            .order('id', { ascending: false })
+            .then(({ data }) => {
+                console.log('Dados da consulta:', data);
+                setListaDeMensagens(data);
+            });
+    }, []);
+
     function handleNovaMensagem(novaMensagem) {
         const mensagem = {
-            id: listaDeMensagens.length + 1,
+           
             de: 'leandro208',
             texto: novaMensagem,
-        }
-        setListaDeMensagens([
+        };
+
+        supabaseClient
+            .from('mensagens')
+            .insert([
+                mensagem
+            ])
+            .then(({ data }) => {
+                console.log('Criando mensagem:', data);
+                setListaDeMensagens([
+                    data[0],
+                        ...listaDeMensagens,
+                ]);
+            });
+
+       {/* setListaDeMensagens([
             mensagem,
             ...listaDeMensagens,
-            
-        ]);
+
+        ]);*/}
         setMensagem('');
     }
 
@@ -131,7 +167,7 @@ function MessageList(props) {
         <Box
             tag="ul"
             styleSheet={{
-                overflow: 'scroll',
+                overflow: 'auto',
                 display: 'flex',
                 flexDirection: 'column-reverse',
                 flex: 1,
@@ -142,7 +178,7 @@ function MessageList(props) {
             {props.mensagens.map((mensagem) => {
                 return (
                     <Text
-                    key={mensagem.id}
+                        key={mensagem.id}
                         tag="li"
                         styleSheet={{
                             borderRadius: '5px',
@@ -166,7 +202,7 @@ function MessageList(props) {
                                     display: 'inline-block',
                                     marginRight: '8px',
                                 }}
-                                src={`https://github.com/vanessametonini.png`}
+                                src={`https://github.com/${mensagem.de}.png`}
                             />
                             <Text tag="strong">
                                 {mensagem.de}
