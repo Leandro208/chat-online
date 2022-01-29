@@ -64,10 +64,10 @@ export default function PaginaInicial() {
                     {/* Formulário */}
                     <Box
                         as="form"
-                        onSubmit={function (infosDoEvento){
+                        onSubmit={function (infosDoEvento) {
                             infosDoEvento.preventDefault();
                             console.log('Submeteu');
-                            roteamento.push('/chat');
+                            roteamento.push(`/chat?username=${username}`);
 
                             //window.location.href = '/chat';
                         }}
@@ -92,13 +92,13 @@ export default function PaginaInicial() {
                             }}
                         />*/}
                         <TextField
-                             value={username}
-                             onChange={function (event){
+                            value={username}
+                            onChange={function (event) {
                                 //pegando o valor
                                 const valor = event.target.value;
                                 //trocando valor da variavel 
                                 setUsername(valor);
-                                
+
                             }}
                             placeholder="Insira seu usuario do Github aqui..."
                             fullWidth
@@ -110,7 +110,7 @@ export default function PaginaInicial() {
                                     backgroundColor: appConfig.theme.colors.neutrals[800],
                                 },
                             }}
-                        /> 
+                        />
                         <Button
                             type='submit'
                             label='Entrar'
@@ -141,13 +141,15 @@ export default function PaginaInicial() {
                             flex: 1,
                             minHeight: '240px',
                         }}
-                    >
+                    >  
                         <Image
                             styleSheet={{
                                 borderRadius: '50%',
                                 marginBottom: '16px',
                             }}
+                            
                             src={`https://github.com/${username}.png`}
+                            
                         />
                         <Text
                             variant="body4"
