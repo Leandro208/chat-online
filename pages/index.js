@@ -141,7 +141,7 @@ export default function PaginaInicial() {
                             flex: 1,
                             minHeight: '240px',
                         }}
-                    >  
+                    > 
                         <Image
                             styleSheet={{
                                 borderRadius: '50%',

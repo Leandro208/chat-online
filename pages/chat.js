@@ -11,9 +11,6 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5v
 const SUPABASE_URL = 'https://hsgjfxyikwjwhznktdxc.supabase.co';
 const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-
-
-
 export default function ChatPage() {
     //pegando usuario logado
     const roteamento = useRouter();
@@ -34,13 +31,13 @@ export default function ChatPage() {
             .order('id', { ascending: false })
             .then(({ data }) => {
                 console.log('Dados da consulta:', data);
-                setListaDeMensagens(data);
+                 setListaDeMensagens(data);
             });
     }, []);
 
     function handleNovaMensagem(novaMensagem) {
         const mensagem = {
-           
+
             de: usuarioLogado,
             texto: novaMensagem,
         };
@@ -54,11 +51,11 @@ export default function ChatPage() {
                 console.log('Criando mensagem:', data);
                 setListaDeMensagens([
                     data[0],
-                        ...listaDeMensagens,
+                    ...listaDeMensagens,
                 ]);
             });
 
-       {/* setListaDeMensagens([
+        {/* setListaDeMensagens([
             mensagem,
             ...listaDeMensagens,
 
@@ -146,7 +143,13 @@ export default function ChatPage() {
                                 color: appConfig.theme.colors.neutrals[200],
                             }}
                         />
-                        <ButtonSendSticker />
+                        
+                        <ButtonSendSticker
+                            onStickerClick={(sticker) => {
+                                handleNovaMensagem(':sticker:' + sticker)
+                                
+                            }}
+                        />
                     </Box>
                 </Box>
             </Box>
@@ -228,7 +231,15 @@ function MessageList(props) {
                                 {(new Date().toLocaleDateString())}
                             </Text>
                         </Box>
-                        {mensagem.texto}
+                        {/*Condicional: {mensagem.texto.startsWith(':sticker:').toString()}*/}
+                        {mensagem.texto.startsWith(':sticker:')
+                            ? (
+                                <Image src = {mensagem.texto.replace(':sticker:', '')}/>
+                            )
+                            : (
+                                mensagem.texto
+                            )}
+                        
                     </Text>
                 );
             })}
