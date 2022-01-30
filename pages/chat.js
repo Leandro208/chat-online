@@ -58,6 +58,7 @@ export default function ChatPage() {
 
             de: usuarioLogado,
             texto: novaMensagem,
+            dAta: 'Enviado ' + new Date().toLocaleDateString() + ' às ' + new Date().toLocaleTimeString()
         };
 
         supabaseClient
@@ -246,7 +247,8 @@ function MessageList(props) {
                                 }}
                                 tag="span"
                             >
-                                {(new Date().toLocaleDateString())}
+                                {/*(new Date().toLocaleDateString())*/}
+                                {mensagem.dAta}
                             </Text>
                         </Box>
                         {/*Condicional: {mensagem.texto.startsWith(':sticker:').toString()}*/}
