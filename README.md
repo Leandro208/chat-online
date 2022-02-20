@@ -1,2 +1,4 @@
 # chat-online
-Projeto criado na imersão React
+
+ReactJS
+Banco de dados: SUPABASE
